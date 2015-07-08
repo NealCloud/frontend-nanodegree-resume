@@ -15,7 +15,7 @@
 
 h1 {
   font-size: 40px;
-  color: #F5A623;
+  color: #EEF954;
   line-height: 48px;
   display: inline;
 }
@@ -23,7 +23,7 @@ h1 {
 h2 {
   font-weight: bold;
   font-size: 24px;
-  color: #999999;
+  color: #000000;
   line-height: 29px;
   padding: 10px;
 }
@@ -87,7 +87,7 @@ a {
 }
 
 #skillsH3 {
-  color: #F5AE23;
+  color: #EEF954;
   display: none;
 }
 
@@ -99,11 +99,28 @@ a {
   color: #F5AE23;
 }
 
+.maroon-text {
+  color: #9d1c2f;
+}
+
+.aqua {
+  background-color: #486898;
+}
+.gold{
+  background-color: #BDBB28;
+}
+
 .white-text {
   font-weight: bold;
   color: #FFFFFF;
 }
+.gray-text{
 
+  color:#4A4A4A;
+}
+.yellow-text{
+  color:#EEF954;
+}
 .gray {
   background-color: #F3F3F3;
   padding-bottom: 10px;
@@ -116,7 +133,8 @@ a {
 
 /* TODO: Replace with image later */
 #header {
-  background-color: #484848;
+  background: #486898;
+/*  background-color: #484848;*/
 }
 
 .flex-box {
