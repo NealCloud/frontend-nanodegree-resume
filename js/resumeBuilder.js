@@ -16,24 +16,24 @@ var bio = {
 		var formattedRole = HTMLheaderRole.replace(DATA, bio.role);
 		var formattedBiopic = HTMLbioPic.replace(DATA, bio.biopic);
 		var formattedMessage = HTMLwelcomeMsg.replace(DATA, bio.welcome);
-		//learned i can chain prepend, this got me to have same look as sample
-		//also can append multiple varaiables
+		//learned that I can chain prepends, giving me a closer copy to the sample
+		//also you can append multiple varaiables
 		$("#header").prepend(formattedRole).prepend(formattedName);
 		$("#header").append(formattedBiopic, formattedMessage);
-
-		$("#mapDiv").append(googleMap); //attach google map div
-		$("#main").append(internationalizeButton);// attach capitalize last name button
+		//attach the google map div and capitalize button
+		$("#mapDiv").append(googleMap);
+		$("#main").append(internationalizeButton);
 
 		//this allows me to +/- to my contacts without worrying about updating code;
-		for(i in bio.contacts){  //Quick loop through contacts
-			var ref = "HTML" + i; //add prefix HTML to the key
-			//learned to use window to access variable with strings
-			var tempFormat = window[ref].replace(DATA, bio.contacts[i]);
+		for(var item in bio.contacts){  //Quick loop through contacts
+			var ref = "HTML" + item; //add prefix HTML to the key
+			//learned to use window to access variables with strings
+			var tempFormat = window[ref].replace(DATA, bio.contacts[item]);
 			//learned I can append to two elements in one go
 			$("#topContacts, #footerContacts").append(tempFormat);
 		}
-
-		if (bio.skills.length > 0){ //check for skills
+		//check for skills
+		if (bio.skills.length > 0){
 			$("#header").append(HTMLskillsStart);
 			for(var i = 0; i < bio.skills.length; i++){ //simple loop and append
 				formattedSkills = HTMLskills.replace(DATA, bio.skills[i]);
@@ -80,37 +80,38 @@ var education = {
 
 	],
 	"display": function(){
-		for(school in education.schools){  //iterate through each school
+
+		for(var school in education.schools){  //iterate through each school
 			$("#education").append(HTMLschoolStart); //append a starter HTML to index
 			var tempHTML = ""; 					//create a temp string to hold HTML values
-			for (value in education.schools[school]){  //check each school key:value
+			for (var value in education.schools[school]){  //check each school key:value
 				//Add a prefix and capitlize first letter to create an HTML helper.js string
 				//this only works if the object key is = to the helper.js equivalent
 				var ref = "HTMLschool" + value[0].toUpperCase() + value.slice(1);
+				//the name value must concat with the url value before being appended
 				if (value === "name"){
-					//use window[ref] to pick the correct helper.js variable and run replace
-					//name value must concat with url value before being appended
+						//use window[ref] to pick the correct helper.js variable and run replace
 						var tempFormat = window[ref].replace(DATA, education.schools[school][value]);
 						tempFormat = tempFormat.replace("#", education.schools[school].url);
 						tempHTML += tempFormat;
 					}
-					else if(value === "url"){} //skip url value
+					else if(value === "url"){} //skip the url value
 					else{
 						var tempFormat = window[ref].replace(DATA, education.schools[school][value]);
 						tempHTML += tempFormat;
 					} // use temp variable to concat all the HTML values
 				} //append it all at once after loop is done
-				  //this didn't seem to work if done one at a time, wasted a lot of time
+				  //this didn't seem to work if done one at a time, wasted a lot of my time
 			$(".education-entry:last").append(tempHTML);
 		}
 		// Online Classes append loop
 		$("#education").append(HTMLonlineClasses);
 
-		for(course in education.onlineCourses){
+		for(var course in education.onlineCourses){
 
 			$("#education").append(HTMLschoolStart);
 			var tempHTML = "";
-			for (value in education.onlineCourses[course]){
+			for (var value in education.onlineCourses[course]){
 				var ref = "HTMLonline" + value[0].toUpperCase() + value.slice(1);
 				if (value === "title"){
 						//title must concat with url
@@ -118,7 +119,7 @@ var education = {
 						tempFormat = tempFormat.replace("#", education.onlineCourses[course].url);
 						tempHTML += tempFormat;
 					}
-					//else if(value === "url"){} onlines classes use the url twice
+					//else if(value === "url"){} // onlines classes use the url value
 					else{
 						var tempFormat = window[ref].replace(DATA, education.onlineCourses[course][value]);
 						tempHTML += tempFormat;
@@ -141,11 +142,11 @@ var work = {
 			"url":"http://www.goarmy.com"
 		}
 	], //a clone of educations display TODO: turn parts of this into a universal function
-	"display": function(){  // start with the if else code I'd imagine
-		for(job in work.jobs){
+	"display": function(){  // split it up into smaller chunks maybe
+		for(var job in work.jobs){
 			$("#workExperience").append(HTMLworkStart);
 			var tempHTML = "";
-			for (value in work.jobs[job]){
+			for (var value in work.jobs[job]){
 				var ref = "HTMLwork" + value[0].toUpperCase() + value.slice(1);
 
 				if (value === "employer"){
@@ -153,7 +154,7 @@ var work = {
 							tempFormat = tempFormat.replace("#", work.jobs[job].url);
 							tempHTML += tempFormat;
 						}
-						else if(value === "url"){} //skip
+						else if(value === "url"){} //skip url
 						else{
 							var tempFormat = window[ref].replace(DATA, work.jobs[job][value]);
 							tempHTML += tempFormat;
@@ -179,21 +180,30 @@ var projects = {
 			"dates":2015,
 			"description": "create a 2048 clone",
 			"images":["2048.png"]
+		},
+		{
+			"title":"Frogger",
+			"url":"http://nealcloud.github.io/frontend-nanodegree-arcade-game/",
+			"dates":2015,
+			"description": "create a frogger clone",
+			"images":["frogger.png"]
 		}
 	],
 	"display": function(){
-		for(i in projects.projects){
+		for(var value in projects.projects){
 			$("#projects").append(HTMLprojectStart);
-			console.log(i);
-			var formProjTitle = HTMLprojectTitle.replace(DATA, projects.projects[i].title);
-			var formProjDate = HTMLprojectDates.replace(DATA, projects.projects[i].dates);
-			var formProjDescrip = HTMLprojectDescription.replace(DATA, projects.projects[i].description);
-			var formProjUrl = formProjTitle.replace("#", projects.projects[i].url);
+
+			var formProjTitle = HTMLprojectTitle.replace(DATA, projects.projects[value].title);
+			var formProjDate = HTMLprojectDates.replace(DATA, projects.projects[value].dates);
+			var formProjDescrip = HTMLprojectDescription.replace(DATA, projects.projects[value].description);
+			var formProjUrl = formProjTitle.replace("#", projects.projects[value].url);
+			var imageList = projects.projects[value].images.length;
 
 			$(".project-entry:last").append(formProjUrl,formProjDate,formProjDescrip);
-			 	if (projects.projects[i].images.length > 0){
-			 		for (var j = 0; j < projects.projects[i].images.length; j++){
-			 			var formProjIm = HTMLprojectImage.replace(DATA, "images/" + projects.projects[i].images[j]);
+				//check for images
+			 	if (imageList > 0){
+			 		for (var j = 0; j < imageList; j++){
+			 			var formProjIm = HTMLprojectImage.replace(DATA, "images/" + projects.projects[value].images[j]);
 			 			$(".project-entry:last").append(formProjIm);
 			 	}
 			 }
@@ -201,21 +211,27 @@ var projects = {
 	}
 };
 
-var DATA = '%data%'; //creates a simpler data retrival variable
+//creates a simpler data retrival variable
+var DATA = '%data%';
 
-function inName(oldName) {  //capitalizes the last name in a string
+function inName(oldName) {
+  //capitalizes the last name in a string
     var finalName = oldName;
-    var names = oldName.split(" "); //divides name into two
-    names[1] = names[1].toUpperCase(); //makes second part uppercase
-    //makes first initial uppercase and selects the letters after to lowercase
+    //divides name into two
+    var names = oldName.split(" ");
+    //makes second part uppercase
+    names[1] = names[1].toUpperCase();
+    //makes first initial uppercase and everything after lowercase
     names[0] = names[0][0].toUpperCase() + names[0].slice(1).toLowerCase();
-    finalName = names.join(" "); //joins the array into one string
+    //joins the array into one string
+    finalName = names.join(" ");
+
     return finalName;
 }
+
 //call all display methods
 projects.display();
 bio.display();
-
 education.display();
 work.display();
 
